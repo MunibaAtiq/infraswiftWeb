@@ -39,7 +39,7 @@
             animation: bodyGlowMove 12s ease-in-out infinite alternate;
             overflow-x: hidden;
             margin: 0;
-            cursor: none;
+            cursor: default;
         }
 
         @keyframes bodyGlowMove {
@@ -2324,15 +2324,25 @@
             100% { top: 100%; opacity: 0; }
         }
 
-        .roadmap-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-            width: 100%;
-            position: relative;
-            z-index: 2;
-        }
+      /* Roadmap Item Spacing */
+.roadmap-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 80px; /* Isey kam se kam 80px rakhein */
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+/* Aakhri item ke niche ka margin khatam karne ke liye */
+.roadmap-item:last-child {
+    margin-bottom: 0 !important;
+}
+
+.roadmap-section {
+    padding: 80px 0; /* Balanced padding */
+}
 
         /* 3D Content Cards */
         .roadmap-card {
@@ -2731,8 +2741,7 @@
 </head>
 
 <body>
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
+ 
 
     <nav class="site-nav" id="siteNav">
         <div class="container nav-shell">
@@ -3524,8 +3533,7 @@
         const $lines = $('.line-path');
         const $title = $('#heroInfoTitle');
         const $copy = $('#heroInfoCopy');
-        const $cursorDot = $('.cursor-dot');
-        const $cursorRing = $('.cursor-ring');
+     
         const $siteNav = $('#siteNav');
         const $navToggle = $('#navToggle');
 
@@ -3587,25 +3595,7 @@
             this.style.setProperty('--my', `${y}%`);
         });
 
-        $(document).on('mousemove', function(e) {
-            if ($(window).width() < 992) return;
-            $('body').addClass('cursor-ready');
-            $cursorDot.css({
-                left: e.clientX,
-                top: e.clientY
-            });
-            $cursorRing.css({
-                left: e.clientX,
-                top: e.clientY
-            });
-        });
-
-        $('a, button, .node, .brand-node, .hero-pill, .hero-stat, .orbit-node').on('mouseenter', function() {
-            $('body').addClass('cursor-hover');
-        }).on('mouseleave', function() {
-            $('body').removeClass('cursor-hover');
-        });
-
+       
         // ============================================================
         // INTERACTIVE SOLUTIONS ORBIT LOGIC
         // ============================================================
@@ -3815,12 +3805,7 @@
             });
         });
 
-        // Custom Cursor interaction for Back to Top
-        $backToTop.on('mouseenter', function() {
-            $('body').addClass('cursor-hover');
-        }).on('mouseleave', function() {
-            $('body').removeClass('cursor-hover');
-        });
+       
     </script>
 
     
