@@ -2884,6 +2884,81 @@
         @media (max-width: 991px) {
             .hub-matrix { grid-template-columns: 1fr; }
         }
+
+
+        /* ============================================================
+   ADVANCED RESPONSIVE ENGINE (MOBILE OPTIMIZATION)
+   ============================================================ */
+
+@media (max-width: 1200px) {
+    .nav-menu { gap: 15px; }
+    .nav-menu a { font-size: 0.75rem; }
+    .orbit-track-circle { width: 380px; height: 380px; }
+    .solutions-col-left { padding: 80px 40px; }
+}
+
+@media (max-width: 991px) {
+    /* Navbar Mobile */
+    .nav-menu {
+        position: fixed; top: 76px; left: -100%; width: 100%; height: calc(100vh - 76px);
+        background: #fff; flex-direction: column; padding: 40px; transition: 0.4s;
+        z-index: 999; display: flex !important; overflow-y: auto;
+    }
+    .site-nav.nav-open .nav-menu { left: 0; }
+    .nav-toggle { display: flex; }
+    .mega-menu { position: static; opacity: 1; visibility: visible; display: none; transform: none; width: 100%; box-shadow: none; padding: 20px 0; border: none; }
+    .mega-parent.active .mega-menu { display: block; }
+
+    /* Hero Section */
+    .hero { text-align: center; padding: 60px 0; }
+    .hero-left { max-width: 100%; margin-bottom: 40px; }
+    .hero-ctas { justify-content: center; }
+    .hero-stats { grid-template-columns: repeat(3, 1fr); margin: 0 auto; }
+    .scene-container { height: 350px; }
+    .isometric-box { transform: scale(0.8); }
+
+    /* Solutions Orbit (Split Layout) */
+    .solutions-section::before { width: 100%; height: 50%; clip-path: none; }
+    .solutions-row { flex-direction: column; }
+    .solutions-col-left, .solutions-col-right { width: 100%; padding: 60px 20px; text-align: center; }
+    .lbl-framework::after { left: 50%; transform: translateX(-50%); }
+    .orbit-wrapper { height: 500px; transform: scale(0.9); }
+
+    /* Solutions Hub */
+    .hub-matrix { grid-template-columns: repeat(2, 1fr); }
+
+    /* Roadmap */
+    .roadmap-main-line { left: 30px; transform: none; }
+    .roadmap-node { left: 30px; }
+    .roadmap-card { width: calc(100% - 80px); margin-left: 80px !important; text-align: left !important; padding: 25px; }
+    .roadmap-item:nth-child(odd) .roadmap-card { transform: translateX(30px); }
+    .step-float-num { left: 20px !important; right: auto !important; font-size: 3rem; }
+
+    /* Success Story */
+    .story-content-split { padding-right: 0; text-align: center; }
+    .story-skyscraper-overlay { display: none; }
+    .story-stats-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .hub-matrix { grid-template-columns: 1fr; }
+    .stats-bar-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+    .ecosystem-columns-matrix { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats { grid-template-columns: 1fr; max-width: 300px; }
+    .industry-card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 576px) {
+    .core-title, .hub-title, .roadmap-header h2 { font-size: 1.8rem; }
+    .orbit-wrapper { transform: scale(0.7); height: 400px; }
+    .industry-card-grid { grid-template-columns: 1fr; }
+    .stats-bar-grid { grid-template-columns: 1fr; }
+    .ecosystem-columns-matrix { grid-template-columns: 1fr; }
+    .story-stats-grid { grid-template-columns: 1fr; text-align: center; }
+    .story-stat-node:not(:last-child)::after { display: none; }
+    .footer-bottom { text-align: center; gap: 10px; }
+    .back-to-top { bottom: 20px; right: 20px; width: 45px; height: 45px; }
+}
     </style>
 </head>
 
@@ -3768,23 +3843,26 @@
         const $siteNav = $('#siteNav');
         const $navToggle = $('#navToggle');
 
-        $navToggle.on('click', function() {
-            const isOpen = $siteNav.toggleClass('nav-open').hasClass('nav-open');
-            $(this).attr('aria-expanded', isOpen);
-            $(this).find('i').toggleClass('fa-bars', !isOpen).toggleClass('fa-xmark', isOpen);
-        });
+       // 1. Mobile Nav Toggle Fix
+$navToggle.on('click', function(e) {
+    e.preventDefault();
+    $siteNav.toggleClass('nav-open');
+    const isOpen = $siteNav.hasClass('nav-open');
+    $(this).find('i').toggleClass('fa-bars', !isOpen).toggleClass('fa-xmark', isOpen);
+});
 
         $('.nav-menu a').on('click', function() {
             $siteNav.removeClass('nav-open');
             $navToggle.attr('aria-expanded', 'false').find('i').addClass('fa-bars').removeClass('fa-xmark');
         });
 
-        $('.mega-parent > a').on('click', function(e) {
-            if ($(window).width() < 992) {
-                e.preventDefault();
-                $(this).parent().toggleClass('active');
-            }
-        });
+       // 2. Mega Menu for Mobile
+$('.mega-parent > a').on('click', function(e) {
+    if ($(window).width() < 992) {
+        e.preventDefault();
+        $(this).parent().toggleClass('active');
+    }
+});
 
         function setActive($item) {
             const key = $item.data('key');
